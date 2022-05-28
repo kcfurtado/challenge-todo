@@ -1,52 +1,26 @@
-import * as express from "express"
-import * as bodyParser from "body-parser"
-import { Request, Response } from "express"
-import { AppDataSource } from "./data-source"
-import { Routes } from "./routes"
-import { User } from "./entity/User"
+import 'dotenv/config'
+import express, { NextFunction, Request, Response } from 'express'
+import cors from 'cors'
+import 'express-async-errors'
+import { router } from './routes'
 
-AppDataSource.initialize().then(async () => {
+const app = express()
 
-    // create express app
-    const app = express()
-    app.use(bodyParser.json())
+app.use(cors())
 
-    // register express routes from defined application routes
-    Routes.forEach(route => {
-        (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
-            const result = (new (route.controller as any))[route.action](req, res, next)
-            if (result instanceof Promise) {
-                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined)
+app.use(express.json()) // to parse application/json content type
 
-            } else if (result !== null && result !== undefined) {
-                res.json(result)
-            }
-        })
-    })
+app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded content type
 
-    // setup express app here
-    // ...
+app.use(router)
 
-    // start express server
-    app.listen(3000)
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
-    // insert new users for test
-    await AppDataSource.manager.save(
-        AppDataSource.manager.create(User, {
-            firstName: "Timber",
-            lastName: "Saw",
-            age: 27
-        })
-    )
+    if (err instanceof Error) return res.status(400).json({ message: err.message });
 
-    await AppDataSource.manager.save(
-        dataSource.manager.create(User, {
-            firstName: "Phantom",
-            lastName: "Assassin",
-            age: 24
-        })
-    )
+    return res.status(500).json({ message: 'Server error!' });
+});
 
-    console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results")
-
-}).catch(error => console.log(error))
+app.listen(5000, () => {
+    console.log('- SERVER RUNNING...')
+})
