@@ -1,4 +1,6 @@
-import { UserController } from "./controller/UserController"
+import { UserController } from './controllers/UserController'
+const userController = new UserController()
+router.post('/users', userController.save)
 
 export const Routes = [{
     method: "get",
