@@ -1,3 +1,5 @@
+import { LOCALSTORAGE } from "./auth";
+
 interface ApiFetchResponse<T> {
     data: T | null;
     error: string[] | null;
@@ -11,16 +13,21 @@ interface ApiFetchProps {
     token?: string;
 }
 const API_URL = 'http://localhost:5000/'
+
 export const fetchJson = async <T>({
     url,
     method,
     data,
     token,
 }: ApiFetchProps): Promise<ApiFetchResponse<T>> => {
+
     try {
+        const storeData = localStorage.getItem(LOCALSTORAGE)
+        const userData = JSON.parse(storeData as string)
+    
         const headers = {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${userData?.token}`,
         };
         /*
             const response = await API.request<T>({
