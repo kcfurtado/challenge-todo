@@ -36,14 +36,14 @@ export class ProjectController {
     async all(req: Request, res: Response) {
         const userId = req.userId
 
-        const projects = await prisma.project.findMany({ where: { userId } })
+        const projects = await prisma.project.findMany({ where: { userId }, include:{tasks:true} })
 
         return res.status(200).json(projects)
     }
 
     async show(req: Request, res: Response) {
         const { id } = req.params
-        const project = await prisma.project.findFirst({ where: { id: Number(id) } })
+        const project = await prisma.project.findFirst({ where: { id: Number(id) }, include:{tasks:true} })
         return res.status(200).json(project)
     }
 
