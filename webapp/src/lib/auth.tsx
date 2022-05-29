@@ -44,24 +44,32 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
 
     async function signIn(email: string, password: string) {
+        setLoading(true)
+
         const response = await fetchJson<IUser>({ url: 'auth', method: 'POST', data: { email, password } })
 
         if (response.status === 'SUCCESS') {
             localStorage.setItem(LOCALSTORAGE, JSON.stringify(response.data))
             setUser(response.data)
+            setLoading(true)
         } else {
             setErrors(response.error)
+            setLoading(true)
         }
     }
 
     async function signUp(name: string, email: string, password: string) {
+        setLoading(true)
+
         const response = await fetchJson<IUser>({ url: 'users', method: 'POST', data: { name, email, password } })
 
         if (response.status === 'SUCCESS') {
             localStorage.setItem(LOCALSTORAGE, JSON.stringify(response.data))
             setUser(response.data)
+            setLoading(true)
         } else {
             setErrors(response.error)
+            setLoading(true)
         }
     }
 
