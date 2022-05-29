@@ -1,10 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
+import { BrowserRouter } from "react-router-dom"
+
+import CustomRoutes from './components/Route';
+import { AuthProvider } from "./lib/auth";
+
 import './styles/global.css'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+ReactDOM.createRoot(
+  document.getElementById('root')!)
+  .render(
+    <BrowserRouter>
+      <React.StrictMode>
+        <AuthProvider>
+          <CustomRoutes />
+        </AuthProvider>
+      </React.StrictMode>
+    </BrowserRouter>
+  )
