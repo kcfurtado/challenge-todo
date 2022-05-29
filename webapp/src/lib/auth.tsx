@@ -25,7 +25,7 @@ interface IAuthProvider {
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
-const LOCALSTORAGE = 'key';
+export const LOCALSTORAGE = 'key';
 
 export const AuthProvider = ({ children }: IAuthProvider) => {
     const [user, setUser] = useState<IUser | null>(null);
