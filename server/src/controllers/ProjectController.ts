@@ -36,20 +36,37 @@ export class ProjectController {
     async all(req: Request, res: Response) {
         const userId = req.userId
 
-        const projects = await prisma.project.findMany({ where: { userId }, include:{tasks:true} })
+        const projects = await prisma.project.findMany({ where: { userId }, include: { tasks: true } })
 
         return res.status(200).json(projects)
     }
 
     async show(req: Request, res: Response) {
         const { id } = req.params
-        const project = await prisma.project.findFirst({ where: { id: Number(id) }, include:{tasks:true} })
+        const project = await prisma.project.findFirst({ where: { id: Number(id) }, include: { tasks: true } })
         return res.status(200).json(project)
     }
 
     async delete(req: Request, res: Response) {
-        const { id } = req.params
-        await prisma.project.delete({ where: { id: Number(id) } })
-        return res.status(200).json({})
+        try {
+            const { id } = req.params
+
+            const deleteTasks = prisma.task.deleteMany({
+                where: {
+                    projectId: Number(id)
+                }
+            })
+            const deleteProject = prisma.project.delete({
+                where: {
+                    id: Number(id)
+                }
+            })
+
+            await prisma.$transaction([deleteTasks, deleteProject])
+            return res.status(200).json({})
+        } catch (error) {
+            return res.status(500).json({})
+        }
+
     }
 }
