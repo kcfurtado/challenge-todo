@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import { useAuth } from '../../lib/auth';
 
 const SignIn: React.FC = () => {
@@ -12,8 +13,23 @@ const SignIn: React.FC = () => {
         signIn(email, password)
     }
 
+    useEffect(() => {
+        console.log('errors>', errors)
+        if (errors !== null) {
+            toast.error(errors[0], {
+                position: toast.POSITION.TOP_CENTER
+            });
+        }
+    }, [errors])
+
     return (
         <div className='flex flex-col justify-center items-center w-screen h-screen bg-gray-200 dark:bg-gray-900'>
+            <ToastContainer
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick
+            />
             <div className="flex flex-col lg:w-1/3 md:lg:w-1/3 max-w-md p-6 shadow-lg rounded-md bg-gray-100 sm:p-10 dark:bg-gray-800 dark:text-gray-100">
                 <div className="mb-8 text-center">
                     <h1 className="my-3 text-4xl font-bold">Sign in</h1>
