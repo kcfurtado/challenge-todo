@@ -12,7 +12,7 @@ import ProjectContainer from './components/ui/ProjectContainer'
 
 function App() {
   const [isCreateProjectModelOpen, setIsCreateProjectModelOpen] = useState(false)
-  const [products, setProducts] = useState<IProject[] | []>([])
+  const [projects, setProducts] = useState<IProject[] | []>([])
   const toggleProjectModel = () => {
     setIsCreateProjectModelOpen(!isCreateProjectModelOpen)
   }
@@ -29,14 +29,18 @@ function App() {
 
   return (
     <MainLayout>
-      <div className="flex flex-col lg:px-52 overflow-hidden">
+      <div className="flex flex-col overflow-hidden">
 
-        <button type="button" className="flex fle-row items-center w-48 space-y-6 my-6 px-6 py-3 font-semibold rounded dark:bg-gray-100 dark:text-gray-800" onClick={toggleProjectModel}> <FaPlus /> Create Project</button>
-        
-        <ProjectContainer 
-          projects={products}
-          loadProjects={getProjects}
-        />
+        <button type="button" className="flex flex-row shadow items-center w-48 space-y-6 my-6 px-6 py-3 font-semibold rounded dark:text-white dark:bg-violet-700 dark:text-gray-800" onClick={toggleProjectModel}> <FaPlus /> Create Project</button>
+
+        <div className="w-full flex flex-row flex-wrap gap-4">
+          {projects?.map(project => {
+            return <ProjectCard
+              project={project}
+              loadProjects={getProjects}
+            />;
+          })}
+        </div>
       </div>
       {
         isCreateProjectModelOpen && (
