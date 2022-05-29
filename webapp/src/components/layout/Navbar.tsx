@@ -5,12 +5,12 @@ export default function Navbar() {
     const { user, signOut } = useAuth()
 
     return (
-        <header className="p-4 dark:bg-gray-800 dark:text-gray-100">
+        <header className="p-4 dark:bg-gray-800 dark:text-gray-100 shadow">
 
             <title>TODO PROJECTS</title>
 
             <div className="container flex justify-between h-16 mx-auto">
-                <a rel="noopener noreferrer" href="#" aria-label="Back to homepage" className="flex items-center p-2 text-4xl">
+                <a rel="noopener noreferrer" href="#" aria-label="Back to homepage" className="flex items-center p-2 text-2xl">
                     Task Manager
                 </a>
 
