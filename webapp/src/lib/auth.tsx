@@ -42,35 +42,55 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
     }, [])
 
+    function responseHandler(response:any) {
+        switch (response.status) {
+            case 'SUCCESS':
+                localStorage.setItem(LOCALSTORAGE, JSON.stringify(response.data))
+                setUser(response.data)
+                setLoading(true)
+                break;
+            case 'ERROR':
+                setErrors(response.error)
+                setLoading(false)
+                break;
+            case 'UNAUTHORIZED':
+                setErrors(['Email or password incorrect!'])
+                setLoading(false)
+                break;
+            case 'NOT_FOUND':
+                setErrors(['Account not found!'])
+                setLoading(false)
+                break;
+            default:
+                setErrors(response.error)
+                setLoading(false)
+        }
+    }
 
     async function signIn(email: string, password: string) {
         setLoading(true)
 
+        if (email==='' || password === '') {
+            setErrors(['Please, fill all fields correctly!'])
+            return
+        }
+
         const response = await fetchJson<IUser>({ url: 'auth', method: 'POST', data: { email, password } })
 
-        if (response.status === 'SUCCESS') {
-            localStorage.setItem(LOCALSTORAGE, JSON.stringify(response.data))
-            setUser(response.data)
-            setLoading(true)
-        } else {
-            setErrors(response.error)
-            setLoading(true)
-        }
+        responseHandler(response)
     }
 
     async function signUp(name: string, email: string, password: string) {
         setLoading(true)
+        
+        if (name ==='' || email==='' || password === '') {
+            setErrors(['Please, fill all fields correctly!'])
+            return
+        }
 
         const response = await fetchJson<IUser>({ url: 'users', method: 'POST', data: { name, email, password } })
 
-        if (response.status === 'SUCCESS') {
-            localStorage.setItem(LOCALSTORAGE, JSON.stringify(response.data))
-            setUser(response.data)
-            setLoading(true)
-        } else {
-            setErrors(response.error)
-            setLoading(true)
-        }
+        responseHandler(response)
     }
 
     const signOut = async () => {
