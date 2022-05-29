@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useAuth } from '../../lib/auth';
+
+import { ToastContainer, toast } from 'react-toastify';
+
 const SignUp: React.FC = () => {
 
     const [name, setName] = useState('')
@@ -13,12 +16,27 @@ const SignUp: React.FC = () => {
         signUp(name, email, password)
     }
 
+    useEffect(() => {
+        console.log('errors>', errors)
+        if (errors !== null) {
+            toast.error(errors[0], {
+                position: toast.POSITION.TOP_CENTER
+            });
+        }
+    }, [errors])
+
     return (
         <div className='flex flex-col justify-center items-center w-screen h-screen bg-gray-200 dark:bg-gray-900'>
+            <ToastContainer
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick
+            />
             <div className="flex flex-col lg:w-1/3 md:w-1/3 max-w-md p-6 shadow-lg rounded-md bg-gray-100 sm:p-10 dark:bg-gray-800 dark:text-gray-100">
                 <div className="mb-8 text-center">
                     <h1 className="my-3 text-4xl font-bold">Sign Up</h1>
-                    <p className="text-sm dark:text-gray-400">Create account now and enjoy it!</p>
+                    <p className="text-sm dark:text-gray-400">Create account now and enjoy it</p>
                 </div>
                 <form novalidate="" action="" className="space-y-12 ng-untouched ng-pristine ng-valid">
                     <div className="space-y-4">
