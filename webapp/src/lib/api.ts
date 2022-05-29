@@ -36,7 +36,7 @@ export const fetchJson = async <T>({
         if (response.status >= 500) {
             return {
                 data: null,
-                error: ["Erro no servidor"],
+                error: ["Server error"],
                 status: "ERROR",
             };
         }
@@ -44,7 +44,7 @@ export const fetchJson = async <T>({
         if (response.status === 401 || response.status === 403) {
             return {
                 data: null,
-                error: ["Não autorizado"],
+                error: ["User Unauthorized"],
                 status: "UNAUTHORIZED",
             };
         }
@@ -52,7 +52,7 @@ export const fetchJson = async <T>({
         if (response.status === 404) {
             return {
                 data: null,
-                error: ["Não encontrado"],
+                error: ["Not found"],
                 status: "NOT_FOUND",
             };
         }
@@ -70,14 +70,14 @@ export const fetchJson = async <T>({
 
         return {
             data: null,
-            error: ["Erro desconhecido"],
+            error: ["Unknown error"],
             status: "ERROR",
         };
     } catch (error: any) {
         if (error.code === "ECONNABORTED") {
             return {
                 data: null,
-                error: ["Erro de conexão"],
+                error: ["Connection error"],
                 status: "ERROR",
             };
         }
