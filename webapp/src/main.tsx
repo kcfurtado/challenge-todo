@@ -6,6 +6,7 @@ import CustomRoutes from './components/Route';
 import { AuthProvider } from "./lib/auth";
 
 import './styles/global.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.createRoot(
   document.getElementById('root')!)
