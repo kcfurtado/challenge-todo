@@ -8,14 +8,14 @@ import { ToastContainer } from 'react-toastify';
 export default function MainLayout({ children }) {
     return <>
         <Navbar />
-        <main className="dark:bg-gray-800 dark:text-cyan-50 w-full">
+        <main className="container w-full mx-auto dark:bg-gray-800 dark:text-cyan-50 pb-7">
             <ToastContainer
                 autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={true}
                 closeOnClick
             />
-            <div>{children}</div>
+            <div className="w-full">{children}</div>
         </main>
         <Footer />
     </>;
