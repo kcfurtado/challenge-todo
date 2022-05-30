@@ -11,6 +11,7 @@ import TaskCard from './TaskCard';
 interface IProps {
     project: IProject
     loadProjects: () => void
+    setProjectFormVisible: (project: IProject | null) => void
 }
 
 interface ITaskForm {
@@ -18,7 +19,7 @@ interface ITaskForm {
     task: ITask | null
 }
 
-const ProjectCard = ({ project, loadProjects }: IProps) => {
+const ProjectCard = ({ project, loadProjects, setProjectFormVisible }: IProps) => {
     const [taskForm, setTaskForm] = useState<ITaskForm>({ isVisible: false, task: null })
 
     function setTaskFormVisible(task: ITask | null) {
@@ -41,7 +42,7 @@ const ProjectCard = ({ project, loadProjects }: IProps) => {
     }
 
     return (
-        <div className="w-full ms:w-1/4 md:w-96 lg:w-96 rounded-md shadow-lg px-2 my-2 dark:bg-gray-900 dark:text-gray-100">
+        <div className="w-full border-2 dark:border-0 ms:w-1/4 md:w-96 lg:w-96 rounded-md shadow-lg px-2 my-2 dark:bg-gray-900 dark:text-gray-100">
             <div className="flex items-center justify-between p-3">
                 <div className="flex items-center space-x-2">
                     <div className="-space-y-1">
@@ -49,7 +50,7 @@ const ProjectCard = ({ project, loadProjects }: IProps) => {
                     </div>
                 </div>
                 <div className="flex items-center space-x-1">
-                    <button type="button" className="flex items-center px-2 py-1 space-x-1 text-xs" onClick={() => setTaskFormVisible(null)}>
+                    <button type="button" className="flex items-center px-2 py-1 space-x-1 text-xs" onClick={() => setProjectFormVisible(project)}>
                         <FiEdit className="w-4 h-4" />
                     </button>
 
@@ -63,12 +64,12 @@ const ProjectCard = ({ project, loadProjects }: IProps) => {
                     </button>
                 </div>
             </div>
-            <div className="flex items-center justify-between px-3">
+            <div className="flex items-center justify-between px-3 pb-7">
                 <span className="w-full break-words inline-block text-xs leading-none dark:text-gray-400">{project?.description}</span>
             </div>
 
-            <div className="w-full h-80 overflow-y-auto">
-                <ul className="flex flex-col divide-y divide-gray-700 px-2 ">
+            <div className="w-full h-96 overflow-y-auto">
+                <ul className="flex flex-col divide-y divide-gray-700 px-2 py-4">
                     {
                         project?.tasks.map(task => <TaskCard
                             key={task.id}

@@ -8,11 +8,19 @@ import { fetchJson } from './lib/api'
 import { IProject } from './lib/types'
 import ProjectCard from './components/ui/ProjectCard'
 
+interface IProjectForm {
+  isVisible: boolean
+  project: IProject | null
+}
+
+
 function App() {
   const [isCreateProjectModelOpen, setIsCreateProjectModelOpen] = useState(false)
   const [projects, setProducts] = useState<IProject[] | []>([])
-  const toggleProjectModel = () => {
-    setIsCreateProjectModelOpen(!isCreateProjectModelOpen)
+  const [projectForm, setProjectForm] = useState<IProjectForm>({ isVisible: false, project: null })
+  
+  function setProjectFormVisible(project: IProject | null) {
+    setProjectForm({ isVisible: true, project })
   }
 
   async function getProjects() {
@@ -29,11 +37,13 @@ function App() {
     <MainLayout>
       <div className="flex flex-col overflow-hidden">
 
-        <button type="button" className="flex flex-row shadow items-center w-48 space-y-6 my-6 px-6 py-3 font-semibold rounded dark:text-white dark:bg-violet-700 dark:text-gray-800" onClick={toggleProjectModel}> <FaPlus /> Create Project</button>
+        <button type="button" className="flex flex-row rounded-full border- shadow items-center w-48 space-y-6 space-x-6 my-6 px-6 py-3 font-semibold dark:text-white dark:bg-violet-700 hover:bg-violet-700 hover:text-white" onClick={() => setProjectFormVisible(null)}> <FaPlus /> Create Project</button>
 
         <div className="w-full flex flex-row flex-wrap gap-4">
           {projects?.map(project => {
             return <ProjectCard
+              key={project.id}
+              setProjectFormVisible={setProjectFormVisible}
               project={project}
               loadProjects={getProjects}
             />;
@@ -41,8 +51,12 @@ function App() {
         </div>
       </div>
       {
-        isCreateProjectModelOpen && (
-          <CreateProjectModal onCloseModel={toggleProjectModel} />
+        projectForm.isVisible && (
+          <CreateProjectModal 
+            project={projectForm.project}
+            onCloseTaskModel={() => setProjectForm({ isVisible: false, project: null })}
+            loadProjects={getProjects}
+          />
         )
       }
     </MainLayout>
