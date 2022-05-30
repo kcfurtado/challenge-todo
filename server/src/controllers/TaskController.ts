@@ -9,7 +9,6 @@ export class TaskController {
             data: {
                 title,
                 description,
-                endDate,
                 projectId,
             }
         })
@@ -18,7 +17,7 @@ export class TaskController {
     }
 
     async update(req: Request, res: Response) {
-        const { title, description, endDate, status } = req.body
+        const { title, description,  status } = req.body
         const { id } = req.params
 
         let task = await prisma.task.findUnique({ where: { id: Number(id) } })
@@ -30,7 +29,6 @@ export class TaskController {
             data: {
                 title,
                 description,
-                endDate,
                 status
             }
         })
