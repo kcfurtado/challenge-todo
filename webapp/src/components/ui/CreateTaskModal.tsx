@@ -42,13 +42,13 @@ const CreateTaskModal = ({ onCloseTaskModel, projectId, task, loadProjects }: IP
         }
 
         if (response.status === 'SUCCESS') {
-            toast.success('Task created successfully!', {
+            toast.success(`Task ${ task ? 'updated': 'created'} successfully!`, {
                 position: toast.POSITION.TOP_CENTER
             });
             loadProjects()
             onCloseTaskModel()
         } else {
-            toast.error('Error creating Task. Try again later!', {
+            toast.error(`Error ${ task ? 'updating': 'creating'}  Task. Try again later!`, {
                 position: toast.POSITION.TOP_CENTER
             });
             onCloseTaskModel()
@@ -70,18 +70,18 @@ const CreateTaskModal = ({ onCloseTaskModel, projectId, task, loadProjects }: IP
 
                         <div className="col-span-full">
                             <label htmlFor="title" className="text-sm">Title</label>
-                            <input id="title" type="text" placeholder="Title 1" className="w-full h-10 p-4 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" value={title} onChange={(e) => setTitle(e.target.value)} />
+                            <input id="title" type="text" placeholder="Title 1" className="w-full h-10 p-4 border-2 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" value={title} onChange={(e) => setTitle(e.target.value)} />
                         </div>
 
                         <div className="col-span-full my-4">
                             <label htmlFor="description" className="text-sm">Description</label>
-                            <textarea id="description" placeholder="Write description ..." className="w-full h-28 p-4 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" value={description} onChange={(e) => setDescription(e.target.value)} ></textarea>
+                            <textarea id="description" placeholder="Write description ..." className="w-full h-28 p-4 border-2 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" value={description} onChange={(e) => setDescription(e.target.value)} ></textarea>
                         </div>
 
                     </fieldset>
                 </form>
 
-                <button type="button" className="flex flex-row shadow items-center space-x-2  px-8 py-3 font-semibold rounded-full shadow hover:bg-violet-700 hover:text-white dark:bg-violet-700 dark:text-gray-900 transition ease-linear" onClick={handleSaveTask} > <FaSave /> Save</button>
+                <button type="button" className="flex flex-row items-center space-x-2  px-8 py-3 font-semibold rounded-full shadow dark:text-white hover:bg-violet-700 hover:text-gray-300  dark:bg-violet-700 transition ease-linear" onClick={handleSaveTask} > <FaSave /> Save</button>
             </div>
         </div>
     );
