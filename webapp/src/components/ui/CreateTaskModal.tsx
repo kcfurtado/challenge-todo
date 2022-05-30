@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { FaSave } from 'react-icons/fa';
-// import { Container } from './styles';
+
 import { fetchJson } from '../../lib/api'
-import { useAuth } from '../../lib/auth';
 import { ITask } from '../../lib/types';
 interface IProps {
     onCloseTaskModel: () => void
@@ -14,18 +13,15 @@ interface IProps {
 
 const CreateTaskModal = ({ onCloseTaskModel, projectId, task, loadProjects }: IProps) => {
     const [title, setTitle] = useState('')
-    const [dateEnd, setDateEnd] = useState('')
     const [description, setDescription] = useState('')
 
     useEffect(() => {
         if (task) {
             setTitle(task.title)
             setDescription(task.description)
-            setDateEnd(new Date(task.dateEnd).toString())
         } else {
             setTitle('')
             setDescription('')
-            setDateEnd('')
         }
     }, [task])
 
@@ -40,9 +36,9 @@ const CreateTaskModal = ({ onCloseTaskModel, projectId, task, loadProjects }: IP
         }
 
         if (task) {
-            response = await fetchJson({ url: `tasks/${task.id}`, data: { title, description, dateEnd }, method: 'PUT' })
+            response = await fetchJson({ url: `tasks/${task.id}`, data: { title, description }, method: 'PUT' })
         } else {
-            response = await fetchJson({ url: `tasks`, data: { title, description, dateEnd, projectId }, method: 'POST' })
+            response = await fetchJson({ url: `tasks`, data: { title, description, projectId }, method: 'POST' })
         }
 
         if (response.status === 'SUCCESS') {
@@ -75,11 +71,6 @@ const CreateTaskModal = ({ onCloseTaskModel, projectId, task, loadProjects }: IP
                         <div className="col-span-full">
                             <label htmlFor="title" className="text-sm">Title</label>
                             <input id="title" type="text" placeholder="Title 1" className="w-full h-10 p-4 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" value={title} onChange={(e) => setTitle(e.target.value)} />
-                        </div>
-
-                        <div className="col-span-full my-4">
-                            <label htmlFor="dateEnd" className="text-sm">Finish Date</label>
-                            <input id="dateEnd" type="date" placeholder="Title 1" className="w-full h-10 p-4 rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900" value={dateEnd} onChange={(e) => setDateEnd(e.target.value)} />
                         </div>
 
                         <div className="col-span-full my-4">

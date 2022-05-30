@@ -12,7 +12,6 @@ export interface ITask {
     id:number
     title: string
     description: string
-    dateEnd: Date
     status?: 'PENDING' | 'DONE' | 'DELETED'
     createdAt?: Date
     updatedAt?: Date

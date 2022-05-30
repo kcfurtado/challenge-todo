@@ -1,5 +1,4 @@
-import React from 'react';
-import { FiEdit, FiPlus, FiTrash, FiCheck } from 'react-icons/fi'
+import { FiEdit, FiTrash, FiCheck } from 'react-icons/fi'
 import { toast } from 'react-toastify';
 import { fetchJson } from '../../lib/api';
 
@@ -7,7 +6,6 @@ import { fetchJson } from '../../lib/api';
 import { ITask } from '../../lib/types';
 import Badge from './Badge';
 
-// import { Container } from './styles';
 interface IProps {
     task: ITask
     setTaskFormVisible: (task: ITask | null) => void
@@ -57,7 +55,6 @@ const TaskCard = ({ task, setTaskFormVisible, loadProjects }: IProps) => {
                         </div>
                         <div className="text-right">
                             <Badge status={task.status} />
-                            <p className="text-sm line-through dark:text-gray-600">{task && task?.dateEnd?.toLocaleString()}</p>
                         </div>
                     </div>
                     {
@@ -85,7 +82,7 @@ const TaskCard = ({ task, setTaskFormVisible, loadProjects }: IProps) => {
                         task.status === 'DONE' && (
 
                             <div className="flex justify-end text-sm ">
-                                <span className="text-sm font-semibold leading-snug sm:pr-2">Finished At: </span> <span className="text-sm">{new Date(task.updatedAt).toLocaleString()}</span>
+                                <span className="text-sm font-semibold leading-snug sm:pr-2">Finished At: </span> <span className="text-sm">{new Date(task?.updatedAt).toLocaleString()}</span>
                             </div>
                         )
                     }
