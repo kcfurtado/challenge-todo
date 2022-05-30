@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FiEdit, FiPlus, FiTrash } from 'react-icons/fi'
 import { toast } from 'react-toastify';
 import { fetchJson } from '../../lib/api';

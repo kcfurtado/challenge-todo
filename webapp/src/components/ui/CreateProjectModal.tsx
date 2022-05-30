@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { useState } from 'react';
+import { FiSave } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 // import { Container } from './styles';
 import { fetchJson } from '../../lib/api'
@@ -11,8 +12,6 @@ interface IProps {
 const CreateProjectModal = ({ onCloseModel }: IProps) => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    
-    const { signIn, errors, loading } = useAuth()
      
     async function handleSaveProject (){
 
@@ -62,7 +61,7 @@ const CreateProjectModal = ({ onCloseModel }: IProps) => {
                     </fieldset>
                 </form>
 
-                <button type="button" className="px-8 py-3 font-semibold rounded-full shadow hover:bg-violet-700 hover:text-white dark:bg-violet-400 dark:text-gray-900 transition ease-linear" onClick={handleSaveProject} >Save</button>
+                <button type="button" className="flex flex-row shadow items-center space-x-2 px-8 py-3 font-semibold rounded-full shadow hover:bg-violet-700 hover:text-white dark:bg-violet-400 dark:text-gray-900 transition ease-linear" onClick={handleSaveProject} ><FiSave /> Save</button>
             </div>
         </div>
     );

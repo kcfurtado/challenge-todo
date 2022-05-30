@@ -7,8 +7,6 @@ import CreateProjectModal from './components/ui/CreateProjectModal'
 import { fetchJson } from './lib/api'
 import { IProject } from './lib/types'
 import ProjectCard from './components/ui/ProjectCard'
-import { LOCALSTORAGE } from './lib/auth'
-import ProjectContainer from './components/ui/ProjectContainer'
 
 function App() {
   const [isCreateProjectModelOpen, setIsCreateProjectModelOpen] = useState(false)

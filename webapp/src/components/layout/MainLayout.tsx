@@ -1,6 +1,3 @@
-import React from 'react';
-
-// import { Container } from './styles';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { ToastContainer } from 'react-toastify';
