@@ -1,5 +1,5 @@
-import React from 'react'
 import { useAuth } from '../../lib/auth'
+import { FiLogOut } from 'react-icons/fi';
 
 export default function Navbar() {
     const { user, signOut } = useAuth()
@@ -19,7 +19,7 @@ export default function Navbar() {
 
                     {
                         user && (
-                            <button className="self-center px-8 py-3 font-semibold rounded dark:bg-red-400 dark:text-gray-900" onClick={signOut}>Sign up</button>
+                            <button type="button" className="flex flex-row items-center px-0 py-2"><FiLogOut /></button>
                         )
                     }
 
