@@ -19,7 +19,7 @@ export default function Navbar() {
 
                     {
                         user && (
-                            <button type="button" className="flex flex-row items-center px-0 py-2"><FiLogOut /></button>
+                            <button type="button" className="flex border-2 rounded  flex-row items-center px-3 py-2" onClick={signOut}><FiLogOut /></button>
                         )
                     }
 
